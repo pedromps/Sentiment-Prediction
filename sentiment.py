@@ -9,7 +9,6 @@ from keras.layers import LSTM, Embedding, Dense
 from keras.preprocessing.text import Tokenizer
 from sklearn.model_selection import train_test_split
 
-
 data_csv = pd.read_csv(os.path.join(os.getcwd(), "rotten_tomatoes_reviews.csv"), skipinitialspace=True)
 
 reviews = data_csv["Review"]
@@ -41,5 +40,13 @@ model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['acc'])
 model.summary()
 history = model.fit(x_train, y_train, epochs=10, batch_size=128, validation_split=0.1)
 
-# todo add graphing code
-# todo add testing 
+# plotting loss
+plt.figure()
+plt.plot(history.history['loss'])
+plt.grid()
+
+# predictions
+accs = model.evaluate(x_test, y_test)
+
+# accuracy:
+print("Accuracy = ", accs)
