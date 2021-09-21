@@ -8,13 +8,14 @@ from keras.models import Sequential
 from keras.layers import LSTM, Embedding, Dense
 from keras.preprocessing.text import Tokenizer
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
 data_csv = pd.read_csv(os.path.join(os.getcwd(), "rotten_tomatoes_reviews.csv"), skipinitialspace=True)
 
 reviews = data_csv["Review"]
 target = data_csv["Freshness"]
 
-# preprocessing, take from F. Chollet's Deep Learning with Python
+# preprocessing, take from F. Chollet's book: Deep Learning with Python
 data = [reviews[i] for i in range(len(reviews))]
 data = np.array(data)
 # max length of each review
@@ -38,15 +39,16 @@ model.add(LSTM(64))
 model.add(Dense(1, activation='sigmoid'))
 model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['acc'])
 model.summary()
-history = model.fit(x_train, y_train, epochs=15, batch_size=128, validation_split=0.1)
+history = model.fit(x_train, y_train, epochs=10, batch_size=128, validation_split=0.1)
 
 # plotting loss
 plt.figure()
 plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
 plt.grid()
 
 # predictions
-accs = model.evaluate(x_test, y_test)
+y_pred = model.predict_classes(x_test)
 
 # accuracy:
-print("Accuracy = ", accs)
+print("Accuracy = ", accuracy_score(y_test, y_pred))
