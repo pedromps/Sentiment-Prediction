@@ -5,7 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from keras import preprocessing
 from keras.models import Sequential
-from keras.layers import LSTM, Embedding, Dense
+from keras.layers import LSTM, Embedding, Dense, Masking
 from keras.preprocessing.text import Tokenizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -35,6 +35,7 @@ x_train, x_test, y_train, y_test = train_test_split(seq_train, target, train_siz
 
 model = Sequential()
 model.add(Embedding(max_words, 64))
+model.add(Masking(mask_value = 0))
 model.add(LSTM(64))
 model.add(Dense(1, activation='sigmoid'))
 model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['acc'])
