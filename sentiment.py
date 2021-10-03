@@ -44,12 +44,14 @@ history = model.fit(x_train, y_train, epochs=10, batch_size=128, validation_spli
 
 # plotting loss
 plt.figure()
+plt.title("Loss and Validation Loss while training")
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
+plt.legend(["Loss", "Val Loss"], loc = 'best')
 plt.grid()
 
 # predictions
 y_pred = model.predict_classes(x_test)
 
 # accuracy:
-print("Accuracy = ", accuracy_score(y_test, y_pred))
+print("Accuracy = {:.2f}".format(100*accuracy_score(y_test, y_pred)))

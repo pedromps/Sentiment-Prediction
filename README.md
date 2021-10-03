@@ -5,3 +5,6 @@ A small attempt to tackle down NLP with the goal of correctly classifying movie 
 
 
 The model used as well as the data pre processing was taken from the book "Deep Learning With Python" by François Chollet
+
+
+The best results as off right now with this network are an accuracy of 87.09%.
