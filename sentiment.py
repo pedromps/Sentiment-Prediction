@@ -33,14 +33,15 @@ seq_train = preprocessing.sequence.pad_sequences(sequences, maxlen=maxlen)
 # train and test datasets
 x_train, x_test, y_train, y_test = train_test_split(seq_train, target, train_size = 0.8)
 
+units = 128
 model = Sequential()
-model.add(Embedding(max_words, 64))
+model.add(Embedding(max_words, units))
 model.add(Masking(mask_value = 0))
-model.add(LSTM(64))
+model.add(LSTM(units))
 model.add(Dense(1, activation='sigmoid'))
 model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['acc'])
 model.summary()
-history = model.fit(x_train, y_train, epochs=10, batch_size=128, validation_split=0.1)
+history = model.fit(x_train, y_train, epochs = 5, batch_size = 128, validation_split = 0.1)
 
 # plotting loss
 plt.figure()
