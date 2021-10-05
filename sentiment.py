@@ -36,6 +36,7 @@ x_train, x_test, y_train, y_test = train_test_split(seq_train, target, train_siz
 units = 128
 model = Sequential()
 model.add(Embedding(max_words, units))
+# 0 can be the mask value as the sequences start at 1, so0 are all the paddings
 model.add(Masking(mask_value = 0))
 model.add(LSTM(units))
 model.add(Dense(1, activation='sigmoid'))
